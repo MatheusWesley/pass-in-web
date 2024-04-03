@@ -1,5 +1,9 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal, Search } from "lucide-react";
 import { IconButton } from "./icon-botton";
+import { Table } from "./table/table";
+import { TableHeader } from "./table/table-header";
+import { TableCell } from "./table/table-cell";
+import { TableRow } from "./table/table-row";
 
 export function AttendeeList() {
   return (
@@ -12,73 +16,71 @@ export function AttendeeList() {
         </div>
       </div>
 
-      <div className="border border-white/10 rounded-lg mt-4">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-white/10">
-              <th style={{ width: 32 }} className="py-3 px-4 text-sm font-semibold text-left">
-                <input className="rounded size-4 bg-black/20 border border-white/10" type="checkbox"/>
-              </th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">Código</th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">Participante</th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">Data da inscrição</th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">Data do check-in</th>
-              <th style={{ width: 64 }} className="py-3 px-4 text-sm font-semibold text-left"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from({ length: 8 }).map((_, i) => {
-              return (
-                <tr key={i} className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-sm text-zinc-300">
-                    <input className="rounded size-4 bg-black/20 border border-white/10" type="checkbox"/>
-                  </td>
-                  <td className="py-3 px-4 text-sm text-zinc-300">52716</td>
-                  <td className="py-3 px-4 text-sm text-zinc-300">
-                    <div className="flex flex-col gap-1">
-                      <span className="font-semibold text-white">Diego Fernandes</span>
-                      <span>diego.schell.f@gmail.com</span>
-                    </div>
-                  </td>
-                  <td className="py-3 px-4 text-sm text-zinc-300">7 days ago</td>
-                  <td className="py-3 px-4 text-sm text-zinc-300">7 days ago</td>
-                  <td className="py-3 px-4 text-sm text-zinc-300 text-right">
-                    <IconButton transparent>
-                      <MoreHorizontal className="size-4" />
-                    </IconButton>
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan={3} className="py-3 px-4 text-sm text-zinc-300">
-                Mostrando 10 de 228 itens
-              </td>
-              <td colSpan={3} className="py-3 px-4 text-sm text-zinc-300 text-right">
-                <div className="inline-flex gap-8 items-center">
-                  <span>Pagina 1 de 23</span>
-                  <div className="flex gap-1.5">
-                    <IconButton>
-                      <ChevronsLeft className="size-4" />
-                    </IconButton>
-                    <IconButton>
-                      <ChevronLeft className="size-4" />
-                    </IconButton>
-                    <IconButton>
-                      <ChevronsRight className="size-4" />
-                    </IconButton>
-                    <IconButton>
-                      <ChevronRight className="size-4" />
-                    </IconButton>
+      <Table>
+        <thead>
+          <tr className="border-b border-white/10">
+            <TableHeader style={{ width: 32 }}>
+              <input className="rounded size-4 bg-black/20 border border-white/10" type="checkbox" />
+            </TableHeader>
+            <TableHeader>Código</TableHeader>
+            <TableHeader>Participante</TableHeader>
+            <TableHeader>Data da inscrição</TableHeader>
+            <TableHeader>Data do check-in</TableHeader>
+            <TableHeader style={{ width: 64 }}></TableHeader>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: 5 }).map((_, i) => {
+            return (
+              <TableRow key={i}>
+                <TableCell>
+                  <input className="rounded size-4 bg-black/20 border border-white/10" type="checkbox" />
+                </TableCell>
+                <TableCell>52716</TableCell>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold text-white">Diego Fernandes</span>
+                    <span>diego.schell.f@gmail.com</span>
                   </div>
+                </TableCell>
+                <TableCell>7 days ago</TableCell>
+                <TableCell>7 days ago</TableCell>
+                <TableCell>
+                  <IconButton transparent>
+                    <MoreHorizontal className="size-4" />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            )
+          })}
+        </tbody>
+        <tfoot>
+          <tr>
+            <TableCell colSpan={3}>
+              Mostrando 10 de 228 itens
+            </TableCell>
+            <TableCell colSpan={3} className="text-right">
+              <div className="inline-flex gap-8 items-center">
+                <span>Pagina 1 de 23</span>
+                <div className="flex gap-1.5">
+                  <IconButton>
+                    <ChevronsLeft className="size-4" />
+                  </IconButton>
+                  <IconButton>
+                    <ChevronLeft className="size-4" />
+                  </IconButton>
+                  <IconButton>
+                    <ChevronsRight className="size-4" />
+                  </IconButton>
+                  <IconButton>
+                    <ChevronRight className="size-4" />
+                  </IconButton>
                 </div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+              </div>
+            </TableCell>
+          </tr>
+        </tfoot>
+      </Table>
     </div>
   )
 }
