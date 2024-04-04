@@ -24,8 +24,24 @@ interface Attendee {
 export function AttendeeList() {
 
   // Estados
-  const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState(() => {
+    const url = new URL(window.location.toString())
+
+    if (url.searchParams.has('search')) {
+      return String(url.searchParams.get('search'))
+    }
+    return ''
+
+  });
+  const [page, setPage] = useState(() => {
+    const url = new URL(window.location.toString())
+
+    if (url.searchParams.has('page')) {
+      return Number(url.searchParams.get('page'))
+    }
+    return 1
+
+  });
   const [total, setTotal] = useState(0);
   const [attendees, setAttendees] = useState<Attendee[]>([])
 
@@ -51,21 +67,35 @@ export function AttendeeList() {
 
   // Funções
   const onSearchInputChanged = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-    setPage(1)
+    setCurrentSearch(event.target.value);
+    setCurrentPage(1)
+  }
+
+  const setCurrentSearch = (search: string ) => {
+    const url = new URL(window.location.toString())
+    url.searchParams.set('search', search)
+    window.history.pushState({}, "", url)
+    setSearch(search)
+  }
+
+  const setCurrentPage = (page: number ) => {
+    const url = new URL(window.location.toString())
+    url.searchParams.set('page', String(page))
+    window.history.pushState({}, "", url)
+    setPage(page)
   }
 
   const goToFirstPage = () => {
-    setPage(1)
+    setCurrentPage(1)
   }
   const goToPreviousPage = () => {
-    setPage(page - 1)
+    setCurrentPage(page - 1)
   }
   const goToNextPage = () => {
-    setPage(page + 1)
+    setCurrentPage(page + 1)
   }
   const goToLastPage = () => {
-    setPage(totalPages)
+    setCurrentPage(totalPages)
   }
 
   return (
@@ -74,7 +104,12 @@ export function AttendeeList() {
         <h1 className="font-bold text-2xl">Participantes</h1>
         <div className="w-72 px-3 py-1.5 border border-white/10 rounded-lg flex items-center gap-3">
           <Search className="size-4 text-emerald-200" />
-          <input onChange={onSearchInputChanged} className="bg-transparent flex-1 outline-none border-0 p-0 text-sm focus:ring-0" type="text" placeholder="Buscar participante..." />
+          <input
+            onChange={onSearchInputChanged}
+            value={search}
+            className="bg-transparent flex-1 outline-none border-0 p-0 text-sm focus:ring-0"
+            type="text"
+            placeholder="Buscar participante..." />
         </div>
       </div>
 
